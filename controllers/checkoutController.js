@@ -1,3 +1,5 @@
+const { createStorefrontApiClient } = require('@shopify/storefront-api-client');
+
 const client = createStorefrontApiClient({
   storeDomain: process.env.storeDomain,
   apiVersion: '2023-10',
@@ -44,5 +46,5 @@ exports.createCart = async (req, res) => {
       language: 'EN',
     },
   });
-  return { data, errors, extensions };
+  return res.json({ message: 'Cart created', data, errors, extensions });
 };
