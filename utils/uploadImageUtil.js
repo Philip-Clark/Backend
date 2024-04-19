@@ -5,7 +5,7 @@ const errorHandler = (error) => {
   console.log(error);
 };
 
-const uploadImageUtil = async (data) => {
+const uploadImageUtil = async (data, filename) => {
   /*------------------------
 Libraries
 
@@ -49,7 +49,7 @@ Libraries
   const stagedUploadsVariables = {
     input: {
       resource: 'FILE', // Important to set this as FILE and not IMAGE. Or else when you try and create the file via Shopify's api there will be an error.
-      filename: 'tool.svg',
+      filename: `${filename}.svg`,
       mimeType: 'image/svg+xml',
       httpMethod: 'PUT',
     },

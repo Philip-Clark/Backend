@@ -4,16 +4,16 @@ const router = express.Router();
 
 exports.uploadImage = async (req, res) => {
   console.log('req.body', req.body);
-  const { foregroundString, backgroundString } = req.body;
-  if (!foregroundString || !backgroundString) {
-    res.status(400).json({ message: 'Please include Foreground and Background SVGs' });
+  const { combinedSVG, filename } = req.body;
+  if (!combinedSVG) {
+    res.status(400).json({ message: 'Please include SVG' });
     return;
   }
-  const uploadFE = uploadImageUtil(foregroundString);
-  const uploadBE = uploadImageUtil(backgroundString);
-
-  const [foregroundResponse, backgroundResponse] = await Promise.all([uploadFE, uploadBE]);
-
-  console.log(foregroundResponse, backgroundResponse);
-  res.json({ foregroundResponse, backgroundResponse, message: 'Images Uploaded' });
+  if (!filename) {
+    res.status(400).json({ message: 'Please include a filename' });
+    return;
+  }
+  const response = await uploadImageUtil(combinedSVG, filename);
+  console.log('url', response.url);
+  res.json({ url: response.url, message: 'Image Uploaded' });
 };
