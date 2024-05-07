@@ -70,8 +70,11 @@ Libraries
         },
       }
     )
-    .catch(errorHandler);
+    .catch((error) => {
+      return { message: 'Error uploading image' + error };
+    });
 
+  if (!stagedUploadsQueryResult.data.data) return { message: 'Error uploading image' };
   // Save the target info.
   const target = stagedUploadsQueryResult.data.data.stagedUploadsCreate.stagedTargets[0];
   const params = target.parameters; // Parameters contain all the sensitive info we'll need to interact with the aws bucket.
