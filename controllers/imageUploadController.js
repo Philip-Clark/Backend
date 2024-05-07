@@ -13,5 +13,9 @@ exports.uploadImage = async (req, res) => {
     return;
   }
   const response = await uploadImageUtil(combinedSVG, filename);
+  if (response.error) {
+    res.status(400).json({ message: response.error });
+    return;
+  }
   res.json({ url: response.url, message: 'Image Uploaded' });
 };
