@@ -75,6 +75,7 @@ Libraries
     });
 
   console.log({ stagedUploadsQueryResult });
+  console.log({ adminURL: process.env.adminURL });
   if (!stagedUploadsQueryResult.data) return { error: 'Error uploading image' };
   // Save the target info.
   const target = stagedUploadsQueryResult.data.data.stagedUploadsCreate.stagedTargets[0];
