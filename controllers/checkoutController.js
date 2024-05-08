@@ -36,6 +36,8 @@ mutation ($input: CartInput!, $country: CountryCode, $language: LanguageCode)
 }
 `;
 
+console.log(process.env.merchandiseId);
+
 exports.createCart = async (req, res) => {
   const { data, errors, extensions } = await client.request(cartCreateMutation, {
     variables: {
