@@ -36,20 +36,17 @@ mutation ($input: CartInput!, $country: CountryCode, $language: LanguageCode)
 }
 `;
 
-console.log(process.env.merchandiseId);
-
 exports.createCart = async (req, res) => {
   const { data, errors, extensions } = await client.request(cartCreateMutation, {
     variables: {
       input: {
         lines: [
           {
-            merchandiseId: process.env.merchandiseId,
+            merchandiseId: req.body.variantID,
             quantity: 1,
             attributes: [
               { key: '_SVG', value: req.body.url },
               { key: '_Color', value: req.body.color },
-              { key: '_Size', value: req.body.size },
             ],
           },
         ],
