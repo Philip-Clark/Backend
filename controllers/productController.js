@@ -11,11 +11,18 @@ const client = createStorefrontApiClient({
 
 const productQuery = `query getProduct($gid: ID!){
   product(id: $gid) {
+    variants(first: 100) {
+      edges {
+        node {
+          id
+          title
+        }
+      }
+    }
     title
     colors:metafield(key: "colors", namespace: "custom") {
       values: value
     }
-
     templates:metafield(key: "templates", namespace: "custom") {
       references(first: 100){
         nodes {
@@ -28,8 +35,21 @@ const productQuery = `query getProduct($gid: ID!){
         }
       }
     }
-
     template_previews:metafield(key: "template_previews", namespace: "custom") {
+      references(first: 100){
+        nodes {
+          ... on MediaImage {
+            alt
+            id
+            image {
+              url
+            }
+          }
+        }
+      }
+    }
+
+    woods:metafield(key: "woods", namespace: "custom") {
       references(first: 100){
         nodes {
           ... on MediaImage {
@@ -60,16 +80,38 @@ exports.getProductData = async (req, res) => {
 
   const templates = data.product.templates.references.nodes.map((template, index) => {
     return {
-      id: template.id,
+      id: index,
       name: template.alt,
       path: template.image.url,
       image: data.product.template_previews.references.nodes[index]?.image.url,
     };
   });
 
+  const colors = JSON.parse(data.product.colors.values).map((color, index) => {
+    return {
+      id: index,
+      value: color,
+    };
+  });
+
+  const variants = data.product.variants.edges.map((variant) => {
+    return {
+      id: variant.node.id,
+      title: variant.node.title,
+    };
+  });
+
+  const woods = data.product.woods.references.nodes.map((wood, index) => {
+    return {
+      id: index,
+      url: wood.image.url,
+    };
+  });
   const cleanedData = {
     title: data.product.title,
-    colors: data.product.colors.values,
+    variants: variants,
+    wood: woods,
+    colors: colors,
     templates: templates,
   };
 
