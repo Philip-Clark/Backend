@@ -97,7 +97,7 @@ exports.getProductData = async (req, res) => {
   const variants = data.product.variants.edges.map((variant) => {
     return {
       id: variant.node.id,
-      title: variant.node.title,
+      size: variant.node.title,
     };
   });
 
@@ -109,8 +109,8 @@ exports.getProductData = async (req, res) => {
   });
   const cleanedData = {
     title: data.product.title,
-    variants: variants,
-    wood: woods,
+    sizes: variants,
+    woods: woods,
     colors: colors,
     templates: templates,
   };
