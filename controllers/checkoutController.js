@@ -46,7 +46,11 @@ exports.createCart = async (req, res) => {
           {
             merchandiseId: process.env.merchandiseId,
             quantity: 1,
-            attributes: [{ key: 'SVG', value: req.body.url }],
+            attributes: [
+              { key: '_SVG', value: req.body.url },
+              { key: '_Color', value: req.body.color },
+              { key: '_Size', value: req.body.size },
+            ],
           },
         ],
       },
