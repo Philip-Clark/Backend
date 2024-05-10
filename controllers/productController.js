@@ -16,6 +16,10 @@ const productQuery = `query getProduct($gid: ID!){
         node {
           id
           title
+          priceV2 {
+            amount
+            currencyCode
+          }
         }
       }
     }
@@ -98,6 +102,7 @@ exports.getProductData = async (req, res) => {
     return {
       id: variant.node.id,
       size: variant.node.title,
+      price: variant.node.priceV2,
     };
   });
 
@@ -109,7 +114,7 @@ exports.getProductData = async (req, res) => {
   });
   const cleanedData = {
     title: data.product.title,
-    sizes: variants,
+    variants: variants,
     woods: woods,
     colors: colors,
     templates: templates,
