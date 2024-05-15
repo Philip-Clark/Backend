@@ -1,17 +1,7 @@
-const axios = require('axios');
-const FormData = require('form-data');
 const fs = require('fs');
-const multer = require('multer');
-const mongodb = require('mongodb');
-const { db } = require('../mongoDB');
-const { resolve } = require('path');
 const { v4: uuidv4 } = require('uuid');
 
 const Grid = require('gridfs-stream');
-const { Readable } = require('stream');
-const dataUri = require('data-uri');
-
-const gfs = Grid(db, mongodb);
 
 const errorHandler = (error) => {
   console.log(error);
