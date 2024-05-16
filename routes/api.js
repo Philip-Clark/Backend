@@ -12,7 +12,8 @@ router.post('/image', uploadImage);
 router.get('/data', getProductData);
 router.get('/ordered_signs/:name', (req, res) => {
   console.log(path.join(__dirname, `../ordered_signs/${req.params.name}`));
-  res.download(path.join(__dirname, `../ordered_signs/${req.params.name}`));
+  const sanitizedFileName = req.params.name.replace(/\([^()]*\)/g, '');
+  res.download(path.join(__dirname, `../ordered_signs/${sanitizedFileName}`));
 });
 
 module.exports = router;
