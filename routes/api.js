@@ -11,6 +11,7 @@ router.post('/image', uploadImage);
 
 router.get('/data', getProductData);
 router.get('/ordered_signs/:name', (req, res) => {
+  console.log(path.join(__dirname, `../ordered_signs/${req.params.name}`));
   res.download(path.join(__dirname, `../ordered_signs/${req.params.name}`));
 });
 

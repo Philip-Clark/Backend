@@ -22,7 +22,7 @@ const uploadImageUtil = async (data, filename, req) => {
     fs.mkdirSync('ordered_signs');
   }
   const uuid = uuidv4();
-  const file = fs.createWriteStream(`ordered_signs/${filename}(${uuid}).svg`);
+  const file = fs.createWriteStream(`ordered_signs/${filename}-(${uuid}).svg`);
   console.log(req);
   file.write(data);
   file.end();
